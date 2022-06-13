@@ -31,7 +31,7 @@ jobs:
           ref: master
     
       - name: Read version nr
-        run: ./scripts/release-flow/create-release.js
+        run: node ./scripts/release-flow/create-release.js
 
       # Runs a single command using the runners shell
       - name: Bump version
