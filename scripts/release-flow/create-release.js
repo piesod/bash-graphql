@@ -33,8 +33,8 @@ function writeNewVersion(bumpedVersion) {
 		if (err) {
 			throw (err);
 		}
-		console.log('Successfully wrote new version: ', newVersion);
 	})
+	return newVersion;
 }
 try {
 	if (!['major', 'minor', 'patch'].includes(BUMP_POSITION)) {
@@ -43,7 +43,8 @@ try {
 	}
 	const currentVersion = getCurrentVersion();
 	const bumpedVersion = bumpVersion(BUMP_POSITION, currentVersion);
-	writeNewVersion(bumpedVersion);
+	const newVersion = writeNewVersion(bumpedVersion);
+	console.log(newVersion);
 } catch(err) {
 	console.log(err);
 }
