@@ -10,16 +10,20 @@ jobs:
         with:
           ref: release
       - uses: actions/setup-node@v2
-    
+
       - name: Merge release into master, Create tag of master, Merge master to develop
         run: |
-            git checkout release
+            git config --global user.email "finish-release@devjump.com"
+            git config --global user.name "Finish-Release Script"
+            git checkout master
+            git pull origin release
+            git push origin master
             version=$(node ./scripts/release-flow/finish-release.js "${{ github.event.inputs.choice }}")
             echo $version
-            # git config --global user.email "create-release@devjump.com"
-            # git config --global user.name "Create-Release Script"
-            # git add ./package.json
-            # git commit -m "Bumping position ${{ github.event.inputs.choice }} - new version $version"
-            # git push origin release
+            git tag -a "$version" -m "Version $version"
+            git push origin "$version"
+            git checkout develop
+            git pull origin master
+            git push origin develop
 
-     
+
