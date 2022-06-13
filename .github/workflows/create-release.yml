@@ -39,5 +39,6 @@ jobs:
             git config --global user.name "Create-Release Script"
             git add ./package.json
             git commit -m "Bumped version ${{ github.event.inputs.choice }}"
+            git push origin master
 
      
