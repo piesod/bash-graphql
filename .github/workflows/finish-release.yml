@@ -1,6 +1,8 @@
 # This is a basic workflow to help you get started with Actions
 
 name: Finish Release
+on:
+  workflow_dispatch:
 
 jobs:
  build:
