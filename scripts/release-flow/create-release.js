@@ -1,19 +1,9 @@
 const fs = require('fs');
 const { exit } = require('process');
+const { getCurrentVersion, VERSION_FILE } = require('./functions-release')
 
 const BUMP_POSITION = process.argv[2];
-const VERSION_FILE = './package.json';
 
-function getCurrentVersion() {
-	try {
-	  const data = fs.readFileSync(VERSION_FILE, 'utf8');
-	  const match = data.match(/\"version\": \"([0-9]{1,}).([0-9]{1,}).([0-9]{1,})\"/);
-	  const [ all, major, minor, patch ] = match;
-	  return {major, minor, patch, versionLine: all, content: data};
-	} catch (err) {
-	  throw Error('Could not read current version', err);
-	}
-}
 function bumpVersion(position, versionObj) {
 	const copy = {...versionObj};
 	copy[position] = parseInt(copy[position]) + 1;
