@@ -10,20 +10,28 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          ref: release
+          ref: master
       - uses: actions/setup-node@v2
 
-      - name: Merge release into master, Create tag of master, Merge master to develop
+      - name: Merge release into master
+        run: |
+            git checkout master
+            git pull origin release
+
+      - name: Push to master
         run: |
             git config --global user.email "finish-release@devjump.com"
             git config --global user.name "Finish-Release Script"
-            git checkout master
-            git pull origin release
             git push origin master
-            version=$(node ./scripts/release-flow/finish-release.js "${{ github.event.inputs.choice }}")
-            echo $version
+
+      - name: Create tag
+        run: |
+            version=$(node ./scripts/release-flow/finish-release.js)
             git tag -a "$version" -m "Version $version"
             git push origin "$version"
+
+      - name: Merge master into develop
+        run: |
             git checkout develop
             git pull origin master
             git push origin develop
