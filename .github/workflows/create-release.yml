@@ -26,9 +26,19 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
-
-      # Runs a single command using the runners shell
-      - name: Bump version
-        run: echo "choice is ${{ github.event.inputs.choice }}"
+        with:
+          ref: release
+      - uses: actions/setup-node@v2
+    
+      - name: Bump version, Stage, Commit new version
+        run: |
+            git checkout release
+            git pull origin develop
+            version=$(node ./scripts/release-flow/create-release.js "${{ github.event.inputs.choice }}")
+            git config --global user.email "create-release@devjump.com"
+            git config --global user.name "Create-Release Script"
+            git add ./package.json
+            git commit -m "Bumping position ${{ github.event.inputs.choice }} - new version $version"
+            git push origin master
 
      
