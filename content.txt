@@ -1,3 +1,4 @@
 Update 1
 Update that should cause version 3.0.2 - failed
-This should really cause the version 3.0.2
+This should really cause the version 3.0.2 - failed
+Should not be easy then every one will do it - 3.0.2
