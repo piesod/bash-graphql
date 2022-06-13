@@ -15,6 +15,7 @@ jobs:
 
       - name: Merge release into master
         run: |
+            git pull
             git checkout master
             git pull origin release
 
