@@ -26,15 +26,17 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
-      - uses: actions/setup-node@v2
         with:
           ref: master
-    
-      - name: Read version nr
+      - uses: actions/setup-node@v2
+      
+      - name: Bump version
         run: node ./scripts/release-flow/create-release.js "${{ github.event.inputs.choice }}"
 
-      # Runs a single command using the runners shell
-      - name: Bump version
-        run: echo "choice is ${{ github.event.inputs.choice }}"
+      - name: Stage package.json
+        run: git add ./package.json
+      
+      - name: Commit
+        run: git commit -m "Bumped version ${{ github.event.inputs.choice }}"
 
      
