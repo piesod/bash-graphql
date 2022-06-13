@@ -29,16 +29,14 @@ jobs:
         with:
           ref: master
       - uses: actions/setup-node@v2
-      
-      - name: Bump version
-        run: node ./scripts/release-flow/create-release.js "${{ github.event.inputs.choice }}"
-
-      - name: Stage, Commit new version
+    
+      - name: Bump version, Stage, Commit new version
         run: |
+            version=$(node ./scripts/release-flow/create-release.js "${{ github.event.inputs.choice }}")
             git config --global user.email "create-release@devjump.com"
             git config --global user.name "Create-Release Script"
             git add ./package.json
-            git commit -m "Bumped version ${{ github.event.inputs.choice }}"
+            git commit -m "Bumping position ${{ github.event.inputs.choice }} - new version $version"
             git push origin master
 
      
