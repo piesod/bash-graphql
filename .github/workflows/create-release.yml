@@ -11,9 +11,9 @@ on:
         type: choice
         description: Version bump type (maj.min.pat)
         options:
-        - major
-        - minor
         - patch
+        - minor
+        - major
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -30,7 +30,7 @@ jobs:
           ref: release
       - uses: actions/setup-node@v2
     
-      - name: Bump version, Stage, Commit new version
+      - name: Bump version, Stage, Commit new version, Push to release
         run: |
             git checkout release
             git pull origin develop
@@ -39,6 +39,6 @@ jobs:
             git config --global user.name "Create-Release Script"
             git add ./package.json
             git commit -m "Bumping position ${{ github.event.inputs.choice }} - new version $version"
-            git push origin master
+            git push origin release
 
      
