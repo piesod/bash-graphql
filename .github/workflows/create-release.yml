@@ -33,10 +33,11 @@ jobs:
       - name: Bump version
         run: node ./scripts/release-flow/create-release.js "${{ github.event.inputs.choice }}"
 
-      - name: Stage package.json
-        run: git add ./package.json
-      
-      - name: Commit
-        run: git commit -m "Bumped version ${{ github.event.inputs.choice }}"
+      - name: Stage, Commit new version
+        run: |
+            git config --global user.email "create-release@devjump.com"
+            git config --global user.name "Create-Release Script"
+            git add ./package.json
+            git commit -m "Bumped version ${{ github.event.inputs.choice }}"
 
      
