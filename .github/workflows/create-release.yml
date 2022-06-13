@@ -27,11 +27,13 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
         with:
-          ref: master
+          ref: release
       - uses: actions/setup-node@v2
     
       - name: Bump version, Stage, Commit new version
         run: |
+            git checkout release
+            git pull origin develop
             version=$(node ./scripts/release-flow/create-release.js "${{ github.event.inputs.choice }}")
             git config --global user.email "create-release@devjump.com"
             git config --global user.name "Create-Release Script"
