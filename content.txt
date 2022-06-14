@@ -4,4 +4,5 @@ This should really cause the version 3.0.2 - failed
 Should not be easy then every one will do it - 3.0.2
 Another update
 Update should bump release -> master -> develop to 3.0.5
-Should create 3.0.6 and deploy to production
+Should create 3.0.6 and deploy to production - failed
+Should create 3.0.6 and deploy to production - now using token
