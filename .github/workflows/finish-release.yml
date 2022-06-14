@@ -40,6 +40,7 @@ jobs:
       - name: Trigger Deploy
         uses: peter-evans/repository-dispatch@v2
         with:
+          token: ${{ secrets.WORKFLOW_RELEASE_DEPLOY_TEST }}
           event-type: trigger-deploy-event
           client-payload: '{"version": "$version"}'
 
