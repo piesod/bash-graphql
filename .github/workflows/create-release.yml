@@ -18,7 +18,7 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-  build:
+  create-release:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
@@ -29,7 +29,7 @@ jobs:
         with:
           ref: release
       - uses: actions/setup-node@v2
-    
+
       - name: Bump version, Stage, Commit new version, Push to release
         run: |
             git checkout release
@@ -41,4 +41,4 @@ jobs:
             git commit -m "Bumping position ${{ github.event.inputs.choice }} - new version $version"
             git push origin release
 
-     
+

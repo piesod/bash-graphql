@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
 
 jobs:
- build:
+ finish-release:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -36,5 +36,11 @@ jobs:
             git checkout develop
             git pull origin master
             git push origin develop
+
+      - name: Trigger Deploy
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          event-type: trigger-deploy-event
+          client-payload: '{"version": "$version"}'
 
 

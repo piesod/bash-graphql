@@ -1,0 +1,9 @@
+name: Deploy
+on:
+  repository_dispatch:
+    types: [trigger-deploy-event]
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Tag to deploy ${{ github.event.client_payload.version }}"
