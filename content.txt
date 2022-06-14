@@ -3,3 +3,4 @@ Update that should cause version 3.0.2 - failed
 This should really cause the version 3.0.2 - failed
 Should not be easy then every one will do it - 3.0.2
 Another update
+Update should bump release -> master -> develop to 3.0.5
