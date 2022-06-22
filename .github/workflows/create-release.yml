@@ -31,6 +31,7 @@ jobs:
 
       - name: Compare version in develop and release
         run: |
+            git pull
             git checkout release
             release_version=$(node ./scripts/release-flow/get-version.js)
             echo "release_version=$release_version" >> $GITHUB_ENV
