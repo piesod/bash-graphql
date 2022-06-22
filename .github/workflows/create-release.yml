@@ -38,6 +38,7 @@ jobs:
             git checkout develop
             develop_version=$(node ./scripts/release-flow/get-version.js)
             echo "develop_version=$develop_version" >> $GITHUB_ENV
+            echo "release version = ${{ env.release_version }} and develop version ${{ env.develop_version }}"
 
       - name: Verify version
         if: ${{ env.release_version }} != ${{ env.develop_version }}
