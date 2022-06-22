@@ -41,7 +41,7 @@ jobs:
             echo "release version = $release_version and develop version $develop_version"
 
       - name: Verify version
-        if: ${{ env.release_version }} != ${{ env.develop_version }}
+        if: ${{ env.release_version != env.develop_version }}
         uses: actions/github-script@v3
         with:
           script: |
