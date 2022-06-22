@@ -41,9 +41,10 @@ jobs:
 
       - name: Verify version
         if: ${{ env.release_version }} != ${{ env.develop_version }}
-        run: |
-          echo "Can not create release since release ${{ env.release_version }} has not been finished"
-          exit 1
+        uses: actions/github-script@v3
+        with:
+          script: |
+              core.setFailed("Can not create release since release ${{ env.release_version }} has not been finished")
 
       - name: Bump version, Stage, Commit new version, Push to release
         run: |
