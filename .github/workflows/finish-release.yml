@@ -27,7 +27,7 @@ jobs:
 
       - name: Create tag
         run: |
-            version=$(node ./scripts/release-flow/finish-release.js)
+            version=$(node ./scripts/release-flow/get-version.js)
             echo "version=$version" >> $GITHUB_ENV
             git tag -a "$version" -m "Version $version"
             git push origin "$version"
