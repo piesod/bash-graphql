@@ -50,8 +50,11 @@ jobs:
       - name: Check diff between develop and release
         run: |
             git pull
-            develop_release_diff=$(git diff master..develop)
+            git checkout release
+            git diff develop..release
+            develop_release_diff=$(git diff develop..release)
             echo "develop_release_diff=$develop_release_diff" >> $GITHUB_ENV
+            exit 1
 
 
       - name: Make sure develop is ahead of release - force fail if not
