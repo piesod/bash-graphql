@@ -51,11 +51,8 @@ jobs:
         run: |
             git pull
             git checkout release
-            git diff develop..release
-            develop_release_diff=$(git diff develop..release)
+            develop_release_diff=$(git diff develop...release)
             echo "develop_release_diff=$develop_release_diff" >> $GITHUB_ENV
-            exit 1
-
 
       - name: Make sure develop is ahead of release - force fail if not
         if: ${{ !env.develop_release_diff }}
