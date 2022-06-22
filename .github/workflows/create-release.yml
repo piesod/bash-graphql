@@ -40,12 +40,24 @@ jobs:
             echo "develop_version=$develop_version" >> $GITHUB_ENV
             echo "release version = $release_version and develop version $develop_version"
 
-      - name: Verify version
+      - name: Verify version - force fail if ongoing release
         if: ${{ env.release_version != env.develop_version }}
         uses: actions/github-script@v3
         with:
           script: |
               core.setFailed("Can not create release since release ${{ env.release_version }} has not been finished")
+
+      - uses: technote-space/get-diff-action@v6
+        with:
+          PATTERNS: |
+            */**/*.*
+
+      - name: Make sure develop is ahead of release - force fail if not
+        if: env.GIT_DIFF
+        uses: actions/github-script@v3
+        with:
+          script: |
+              core.setFailed("Can not create release since there is no diff between develop and release")
 
       - name: Bump version, Stage, Commit new version, Push to release
         run: |
