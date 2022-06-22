@@ -32,11 +32,13 @@ jobs:
             git tag -a "$version" -m "Version $version"
             git push origin "$version"
 
-      - name: Merge master into develop
-        run: |
-            git checkout develop
-            git pull origin master
-            git push origin develop
+      - name: Create PR merge master into develop
+        uses: repo-sync/pull-request@v2
+        with:
+          destination_branch: "develop"
+          pr_title: "Merging release ${{ env.version }} into develop"   # Title of pull request
+          pr_body: "This is an automated PR when finishing the release" # Full markdown support, requires pr_title to be set
+          github_token: ${{ secrets.WORKFLOW_RELEASE_DEPLOY_TEST }}
 
       - name: Trigger Deploy
         uses: peter-evans/repository-dispatch@v2
