@@ -35,6 +35,7 @@ jobs:
       - name: Create PR merge master into develop
         uses: repo-sync/pull-request@v2
         with:
+          source_branch: "master"
           destination_branch: "develop"
           pr_title: "Merging release ${{ env.version }} into develop"   # Title of pull request
           pr_body: "This is an automated PR when finishing the release" # Full markdown support, requires pr_title to be set
