@@ -17,7 +17,7 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  check-if-release-possible:
+  create-release:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
@@ -49,8 +49,10 @@ jobs:
 
       - name: Check diff between develop and release
         run: |
+            git pull
             develop_release_diff=$(git diff master..develop)
             echo "develop_release_diff=$develop_release_diff" >> $GITHUB_ENV
+
 
       - name: Make sure develop is ahead of release - force fail if not
         if: ${{ !env.develop_release_diff }}
@@ -58,18 +60,6 @@ jobs:
         with:
           script: |
               core.setFailed("Can not create release since there is no diff between develop and release")
-
-  create-release:
-    # The type of runner that the job will run on
-    runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
-        with:
-          ref: release
-      - uses: actions/setup-node@v2
 
       - name: Bump version, Stage, Commit new version, Push to release
         run: |
